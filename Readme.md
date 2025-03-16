@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Родика Давлетшина](https://up.htmlacademy.ru/javascript-individual/2/user/2114175).
-* Наставник: `Неизвестно`.
+* Наставник: [Анастасия Ничипорчук](https://htmlacademy.ru/profile/id612797).
 
 ---
 
