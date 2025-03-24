@@ -29,7 +29,8 @@ const getPolydromeString = (chechString) => {
 
 // Дополнительное задание
 const getNumberExtraction = (input) => {
-  const inputString = `${input}`;
+  const inputString = `${input}`; // любое входящее значение будет превращаться в строку
+  // это нужно для таких значений пример console.log(getNumberExtraction(123))
   let result = '';
   for (let i = 0; i <= inputString.length - 1; i++) {
     const parsedInt = parseInt(inputString[i], 10);
@@ -38,7 +39,9 @@ const getNumberExtraction = (input) => {
     }
     result += inputString[i];
   }
-  if (result.length === '') {
+  if (result.length === '') { // если функция отработала и в переданных значениях в функцию не было
+  // числа в стороке, то функция ничего не запишет в пустую строку, значит она не нашла число, а значит
+  // возвращает NaN, пример console.log(getNumberExtraction('gkhg'))
     return NaN;
   }
   return result;
