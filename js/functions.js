@@ -6,17 +6,12 @@ const getSizeLenght = (maxString = '', maxLength = 1) => maxString.length <= max
 
 // Функция для проверки, является ли строка палиндромом.
 const getPolydromeString = (chechString) => {
-  const replaceString = chechString.replaceAll();
-  const caseString = replaceString.toLowerCase();
+  const string = chechString.replaceAll(' ', '').toLowerCase();
   let result = '';
-  for (let i = caseString.length - 1; i >= 0; i--) {
-    result += caseString[i];
+  for (let i = string.length - 1; i >= 0; i--) {
+    result += string[i];
   }
-  if (result === caseString) {
-    return true;
-  }
-
-  return false;
+  return result === string;
 };
 // console.log(getPolydromeString('топот')); // true
 // console.log(getPolydromeString('ДовОд')); // true
