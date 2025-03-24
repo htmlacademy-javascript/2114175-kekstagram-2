@@ -1,18 +1,13 @@
 // Функция для проверки длины строки.
-const getSizeLenght = (maxString, maxLength) => {
-  if (maxString.length <= maxLength) {
-    return true;
-  }
-  return false;
-};
-// console.log(getSizeLenght('проверяемая строка', 18));
-// console.log(getSizeLenght('проверяемая стро', 20));
-// console.log(getSizeLenght('проверяемая строк', 4));
+const getSizeLenght = (maxString = '', maxLength = 1) => maxString.length <= maxLength;
+// console.log(getSizeLenght('проверяемая строка', 18)); // true
+// console.log(getSizeLenght('проверяемая стро', 20)); // true
+// console.log(getSizeLenght('проверяемая строк', 4)); // false
 
 // Функция для проверки, является ли строка палиндромом.
 const getPolydromeString = (chechString) => {
-  let replaceString = chechString.replaceAll();
-  let caseString = replaceString.toLowerCase();
+  const replaceString = chechString.replaceAll();
+  const caseString = replaceString.toLowerCase();
   let result = '';
   for (let i = caseString.length - 1; i >= 0; i--) {
     result += caseString[i];
@@ -23,9 +18,9 @@ const getPolydromeString = (chechString) => {
 
   return false;
 };
-// console.log(getPolydromeString('топот'));
-// console.log(getPolydromeString('ДовОд'));
-// console.log(getPolydromeString('Кекс'));
+// console.log(getPolydromeString('топот')); // true
+// console.log(getPolydromeString('ДовОд')); // true
+// console.log(getPolydromeString('Кекс')); // false
 
 // Дополнительное задание
 const getNumberExtraction = (input) => {
@@ -42,6 +37,7 @@ const getNumberExtraction = (input) => {
   if (result.length === '') { // если функция отработала и в переданных значениях в функцию не было
   // числа в стороке, то функция ничего не запишет в пустую строку, значит она не нашла число, а значит
   // возвращает NaN, пример console.log(getNumberExtraction('gkhg'))
+  // в задании просят вернуть именно NaN
     return NaN;
   }
   return result;
