@@ -1,6 +1,6 @@
 // Функция для проверки длины строки.
 const getSizeLenght = (maxString, maxLength) => {
-  while (maxString.length <= maxLength) {
+  if (maxString.length <= maxLength) {
     return true;
   }
   return false;
