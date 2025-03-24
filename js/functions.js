@@ -17,7 +17,7 @@ const getPolydromeString = (chechString) => {
   for (let i = caseString.length - 1; i >= 0; i--) {
     result += caseString[i];
   }
-  while (result === caseString) {
+  if (result === caseString) {
     return true;
   }
 
