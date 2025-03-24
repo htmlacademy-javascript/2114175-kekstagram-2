@@ -1,35 +1,26 @@
 // Функция для проверки длины строки.
-const getSizeLenght = (maxString, maxLength) => {
-  while (maxString.length <= maxLength) {
-    return true;
-  }
-  return false;
-};
-// console.log(getSizeLenght('проверяемая строка', 18));
-// console.log(getSizeLenght('проверяемая стро', 20));
-// console.log(getSizeLenght('проверяемая строк', 4));
+const getSizeLenght = (maxString = '', maxLength = 1) => maxString.length <= maxLength;
+// console.log(getSizeLenght('проверяемая строка', 18)); // true
+// console.log(getSizeLenght('проверяемая стро', 20)); // true
+// console.log(getSizeLenght('проверяемая строк', 4)); // false
 
 // Функция для проверки, является ли строка палиндромом.
 const getPolydromeString = (chechString) => {
-  let replaceString = chechString.replaceAll();
-  let caseString = replaceString.toLowerCase();
+  const string = chechString.replaceAll(' ', '').toLowerCase();
   let result = '';
-  for (let i = caseString.length - 1; i >= 0; i--) {
-    result += caseString[i];
+  for (let i = string.length - 1; i >= 0; i--) {
+    result += string[i];
   }
-  while (result === caseString) {
-    return true;
-  }
-
-  return false;
+  return result === string;
 };
-// console.log(getPolydromeString('топот'));
-// console.log(getPolydromeString('ДовОд'));
-// console.log(getPolydromeString('Кекс'));
+// console.log(getPolydromeString('топот')); // true
+// console.log(getPolydromeString('ДовОд')); // true
+// console.log(getPolydromeString('Кекс')); // false
 
 // Дополнительное задание
 const getNumberExtraction = (input) => {
-  const inputString = `${input}`;
+  const inputString = `${input}`; // любое входящее значение будет превращаться в строку
+  // это нужно для таких значений пример console.log(getNumberExtraction(123))
   let result = '';
   for (let i = 0; i <= inputString.length - 1; i++) {
     const parsedInt = parseInt(inputString[i], 10);
@@ -38,7 +29,10 @@ const getNumberExtraction = (input) => {
     }
     result += inputString[i];
   }
-  if (result.length === '') {
+  if (result.length === '') { // если функция отработала и в переданных значениях в функцию не было
+  // числа в стороке, то функция ничего не запишет в пустую строку, значит она не нашла число, а значит
+  // возвращает NaN, пример console.log(getNumberExtraction('gkhg'))
+  // в задании просят вернуть именно NaN
     return NaN;
   }
   return result;
