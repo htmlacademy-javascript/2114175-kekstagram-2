@@ -37,32 +37,26 @@ const getRondomIndex = function (array) {
 
 const createBlockObjects = function (min, max) {
   const allObjects = [];
-  const oneObject = {
-    id: '',
-    url: '',
-    description: '',
-    likes: '',
-    comments: function () {
-      return {
-        id: '',
-        avatar: '',
-        message: '',
-        name: ''
-      };
-    }
-  };
 
-  for (let i = 0; i < max; i++) {
-    const newObject = Object.assign(oneObject);
-    newObject.id = i;
-    newObject.url = `photos/${getRandomInteger(1, 25)}.jpg`;
-    newObject.description = getRondomIndex(DESCRIPTION);
-    newObject.likes = getRandomInteger(15, 200);
-    newObject.comments = getRandomInteger(0, 30);
-    newObject.comments.id = i;
-    newObject.comments.avatar = `img/avatar-${getRandomInteger(1, 6)}.svg`;
-    newObject.comments.message = getRondomIndex(MESSAGE);
-    newObject.comments.name = getRondomIndex(NAME);
+  for (let i = min; i <= max; i++) {
+    const newObject = {
+      id: i,
+      url: `photos/${getRandomInteger(1, 25)}.jpg`,
+      description: getRondomIndex(DESCRIPTION),
+      likes: getRandomInteger(15, 200),
+      comments: [],
+    };
+    const numberOfComments = getRandomInteger(0, 30);
+    for (let j = 1; j <= numberOfComments; j++) {
+      const newComment = {
+        id: j,
+        avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+        message: getRondomIndex(MESSAGE),
+        name: getRondomIndex(NAME)
+      };
+      newObject.comments.push(newComment);
+    }
+
     allObjects.push(newObject);
   }
 
