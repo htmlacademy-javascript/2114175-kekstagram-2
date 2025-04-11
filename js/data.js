@@ -1,4 +1,4 @@
-import {getRandomInteger, getRondomIndex} from './data.js';
+import {getRandomInteger, getRondomIndex} from './util.js';
 
 const MESSAGES = [
   'Всё отлично!',
