@@ -1,5 +1,3 @@
-import {getRandomInteger, getRondomIndex} from './util.js';
-
 // Дополнительное задание
 const getNumberExtraction = (input) => {
   const inputString = `${input}`; // любое входящее значение будет превращаться в строку
@@ -25,58 +23,45 @@ const getNumberExtraction = (input) => {
 // console.log(getNumberExtraction('gkhg')); //'gkhg'
 // console.log(getNumberExtraction(123)); //123
 
-const MESSAGES = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
+// 5 раздел 2 часть домашки
 
-const NAMES = [
-  'Артем',
-  'Андрей',
-  'Ян',
-  'Анна',
-  'Анастасия',
-  'Яна'
-];
+const checkWorkTime = function (start, end, startMeeting, meetingtime) {
+  const getSplitTime = function (time) {
+    return time.split(':').map((arrayItem) => parseInt(arrayItem, 10));
+  };
 
-const DESCRIPTIONS = [
-  'Это я что-то делаю',
-  'Это я что-то ем',
-  'Это я гуляю'
-];
+  const startWorkTime = getSplitTime(start);
+  const endWorkTime = getSplitTime(end);
+  const startMeetingTime = getSplitTime(startMeeting);
 
-const NUMBERS = [6, 15, 25, 30, 200];
+  // 1. Проверить что часы начала встречи не раньше часов начала работы. Если равно, то проверяем что минуты не раньше
+  if (startMeetingTime[0] < startWorkTime[0]) {
+    return false;
+  }
+  if (startMeetingTime[0] === startWorkTime[0] && startMeetingTime[1] < startWorkTime[1]) {
+    return false;
+  }
+  // 2. Посчитать время окончания встречи. Сделать из meetingMinutes кол-во часов и минут встречи. Прибавить ко времени начала встречи
+  const meetingHour = Math.trunc(meetingtime / 60);
+  const meetingMinutes = meetingtime - (meetingHour * 60);
+  const meetingEndHour = startMeetingTime[0] + meetingHour;
+  const meetingEndMinutes = startMeetingTime[1] + meetingMinutes; // todo: минуты не должны быть больше 59
 
-const createBlockObjects = function (min, max) {
-  const allObjects = [];
 
-  for (let i = 0; i <= max; i++) {
-    const newObject = {
-      id: i,
-      url: `photos/${getRandomInteger(1, NUMBERS[2])}.jpg`,
-      description: getRondomIndex(DESCRIPTIONS),
-      likes: getRandomInteger(NUMBERS[1], NUMBERS[4]),
-      comments: [],
-    };
-    const numberOfComments = getRandomInteger(0, NUMBERS[3]);
-    for (let j = 1; j <= numberOfComments; j++) {
-      const newComment = {
-        id: j,
-        avatar: `img/avatar-${getRandomInteger(1, NUMBERS[0])}.svg`,
-        message: getRondomIndex(MESSAGES),
-        name: getRondomIndex(NAMES)
-      };
-      newObject.comments.push(newComment);
-    }
-
-    allObjects.push(newObject);
+  // 3. Проверить что часы окончания встречи не выходят за рамки окончания рабочего дня (аналогично п1)
+  if (meetingEndHour > endWorkTime[0]) {
+    return false;
   }
 
-  return allObjects;
+  if (meetingEndHour === endWorkTime[0] && meetingEndMinutes > endWorkTime[1]) {
+    return false;
+  }
+
+  return true;
 };
 
-//console.log(createBlockObjects(1, 25));
+console.log(checkWorkTime('08:00', '17:30', '14:00', 90)); // true
+// console.log(checkWorkTime('8:0', '10:0', '8:0', 120)); // true
+// console.log(checkWorkTime('08:00', '14:30', '14:00', 90)); // false
+// console.log(checkWorkTime('14:00', '17:30', '08:0', 90)); // false
+// console.log(checkWorkTime('8:00', '17:30', '08:00', 900)); // false
