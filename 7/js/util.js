@@ -24,4 +24,6 @@ const getPolydromeString = (chechString) => {
   return result === string;
 };
 
-export {getRandomInteger, getRondomIndex, getSizeLenght, getPolydromeString};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, getRondomIndex, getSizeLenght, getPolydromeString, isEscapeKey};
