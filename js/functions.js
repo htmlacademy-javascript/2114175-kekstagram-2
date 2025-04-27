@@ -60,7 +60,7 @@ const checkWorkTime = function (start, end, startMeeting, meetingtime) {
   return true;
 };
 
-console.log(checkWorkTime('08:00', '17:30', '14:00', 90)); // true
+//console.log(checkWorkTime('08:00', '17:30', '14:00', 90)); // true
 // console.log(checkWorkTime('8:0', '10:0', '8:0', 120)); // true
 // console.log(checkWorkTime('08:00', '14:30', '14:00', 90)); // false
 // console.log(checkWorkTime('14:00', '17:30', '08:0', 90)); // false
