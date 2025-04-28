@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 
 const templateFragment = document.querySelector('#comment').content;
 
-export const modalBigPic = (dataPictures) => {
+export const renderModalBigPhoto = (dataPictures) => {
   const pictures = document.querySelectorAll('.picture'); // все
   const bigPic = document.querySelector('.big-picture'); // модалка для большого фото
   const cancelBut = bigPic.querySelector('.cancel'); // крестик в модалке
@@ -10,11 +10,11 @@ export const modalBigPic = (dataPictures) => {
   const commentsLoader = bigPic.querySelector('.comments-loader'); // кнопка загрузить еще
   const body = document.querySelector('body');
 
-  const bodyScroll = () => {
+  const toggleBodyScrollClass = () => {
     body.classList.toggle('modal-open');
   };
 
-  const hiddenClass = () => {
+  const toggleiddenClass = () => {
     commentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   };
@@ -34,7 +34,7 @@ export const modalBigPic = (dataPictures) => {
 
   function closeUserModal () {
     bigPic.classList.add('hidden');
-    bodyScroll();
+    toggleBodyScrollClass();
 
     document.removeEventListener('keydown', onDocumentKeydown);
   }
@@ -43,7 +43,7 @@ export const modalBigPic = (dataPictures) => {
     closeUserModal();
   });
 
-  const renderCooments = (comments) => {
+  const renderComments = (comments) => {
     const fragment = document.createDocumentFragment();
 
     comments.forEach((comment) => {
@@ -62,15 +62,15 @@ export const modalBigPic = (dataPictures) => {
   pictures.forEach((picture) => {
     picture.addEventListener('click', (evt) => {
       openUserModal();
-      hiddenClass();
-      bodyScroll();
+      toggleiddenClass();
+      toggleBodyScrollClass();
       const picId = +evt.currentTarget.getAttribute('data-id');
       const dataPicture = dataPictures.filter((dataPic) => dataPic.id === picId)[0];
       bigPic.querySelector('.big-picture__img img').src = dataPicture.url;
       bigPic.querySelector('.likes-count').textContent = dataPicture.likes;
       bigPic.querySelector('.social__comment-total-count').textContent = dataPicture.comments.length;
       bigPic.querySelector('.social__comments').innerHTML = '';
-      bigPic.querySelector('.social__comments').append(renderCooments(dataPicture.comments));
+      bigPic.querySelector('.social__comments').append(renderComments(dataPicture.comments));
       bigPic.querySelector('.social__caption').textContent = dataPicture.description;
     });
   });
