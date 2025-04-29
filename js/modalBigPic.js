@@ -14,15 +14,6 @@ export const renderModalBigPhoto = (dataPictures) => {
     body.classList.toggle('modal-open');
   };
 
-  const toggleiddenClass = (evt) => {
-    if (evt < 5) {
-      commentCount.classList.add('hidden');
-      commentsLoader.classList.add('hidden');
-    } else if (evt === 5) {
-      commentsLoader.classList.add('hidden');
-    }
-  };
-
   const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -80,6 +71,24 @@ export const renderModalBigPhoto = (dataPictures) => {
   // При изменении количества показанных комментариев число показанных комментариев
   // в блоке .social__comment-count также изменяется.
 
+
+  const getFilterComment = (comments) => {
+    const massiveComments = comments; // массив комментов
+    const socialCommentsList = bigPic.querySelector('.social__comments');
+
+    if (massiveComments.length < 5) {
+      commentCount.classList.add('hidden');
+      commentsLoader.classList.add('hidden');
+      socialCommentsList.append(renderComments(massiveComments));// закидываю комменты
+    } else if (massiveComments.length === 5) {
+      commentsLoader.classList.add('hidden');
+      socialCommentsList.append(renderComments(massiveComments));// закидываю комменты
+    } else {
+      const sliceMassive = massiveComments.slice(0, 5);// первые 5
+      socialCommentsList.append(renderComments(sliceMassive)); // закидываю комменты
+    }
+  };
+
   // Не забудьте реализовать обновление числа показанных комментариев в блоке .social__comment-count.
 
   pictures.forEach((picture) => {
@@ -93,8 +102,7 @@ export const renderModalBigPhoto = (dataPictures) => {
       bigPic.querySelector('.social__comment-total-count').textContent = dataPicture.comments.length;
       bigPic.querySelector('.social__caption').textContent = dataPicture.description;
       bigPic.querySelector('.social__comments').innerHTML = '';
-      bigPic.querySelector('.social__comments').append(renderComments(dataPicture.comments));
-      toggleiddenClass(dataPicture.comments.length);
+      getFilterComment(dataPicture.comments);
     });
   });
 };
