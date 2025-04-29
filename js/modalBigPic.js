@@ -60,14 +60,13 @@ export const renderModalBigPhoto = (dataPictures) => {
   };
 
   const loadMoreComments = () => { // загружает еще комментариии
-    const appendComments = socialComments.splice(0, 5);
-    const loadShowComment = parseInt(commentCountShow.textContent, 10);
-    commentCountShow.textContent = appendComments.length + loadShowComment;
+    const appendComments = socialComments.splice(0, 5); // вырезаем на 5 комментов
+    const loadShowComment = parseInt(commentCountShow.textContent, 10); // приводим к числу
+    commentCountShow.textContent = appendComments.length + loadShowComment; // перезаписываем span "5"
 
-    socialCommentsList.append(getTemplateComments(appendComments));
-    console.log(loadShowComment);
+    socialCommentsList.append(getTemplateComments(appendComments)); // закидываем 5 комментов
 
-    if (socialComments.length === 0) {
+    if (socialComments.length === 0) { // если не осталось комментов для загрузки
       commentsLoader.classList.add('hidden'); // отключаю отображение кнопки
     }
   };
