@@ -43,12 +43,27 @@ const pristine = new Pristine(form, {
 });
 
 const validateHashtags = (value) => {
-  if (!value.trim()) { // необязательное поле
+  if (!value.trim()) { // хэштеги не обязтельны
     return true;
   }
 
   const hashtags = value.trim().split(/\s+/); //делаем массив строк разбитый по пробелам
+
+  const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/; // валидные символы
+
+  for (const tag of hashtags) {
+    if (!tag.startsWith('#')) {
+      return false;
+    } // Должен начинаться с #
+    if (tag === '#') {
+      return false;
+    } // Не только #
+    if (!hashtagPattern.test(tag)) {
+      return false;
+    } // Только буквы/цифры, не более 20 символов
+  }
   console.log(hashtags);
+
   if (hashtags.length > 5) { // не больше 5 хэштегов
     return false;
   }
@@ -59,28 +74,82 @@ const validateHashtags = (value) => {
     return false;
   }
 
-  const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/; // валидные символы
-  return hashtags.every((tag) => hashtagPattern.test(tag)); //
+  return hashtags.every((tag) => hashtagPattern.test(tag));
+
+};
+
+const getHashtagsErrorMessage = (value) => {
+  if (!value.trim()) {
+    return '';
+  }
+
+  const hashtags = value.trim().split(/\s+/);
+
+  if (hashtags.length > 5) {
+    return 'Нельзя указать больше пяти хэштегов';
+  }
+
+  const lowerCaseTags = hashtags.map(tag => tag.toLowerCase());
+
+  const uniqueTags = new Set(lowerCaseTags);
+  if (uniqueTags.size !== hashtags.length) {
+    return 'Один и тот же хэштег не может быть использован дважды';
+  }
+
+  const hashtagPattern = /^#[a-zа-яё0-9]{1,19}$/i;
+  for (const tag of hashtags) {
+    if (!tag.startsWith('#')) {
+      return 'Хэштег должен начинаться с символа #';
+    }
+    if (tag === '#') {
+      return 'Хэштег не может состоять только из одной решётки';
+    }
+    if (!hashtagPattern.test(tag)) {
+      return 'Хэштег должен содержать только буквы и цифры и быть не длиннее 20 символов';
+    }
+  }
+  return '';
 };
 
 // валидация хэштегов
 pristine.addValidator(
   hashtagsInput, // инпут хэштега
   validateHashtags, // функция проверки
-  'Неверный формат хэштегов: до 5, через пробел, без спецсимволов, каждый до 20 символов, без повторов',
-  2, false
+  getHashtagsErrorMessage // сообщения с ошибками
 );
 
-// проверяем чтоб не больше 140 символов
-const validateComments = (value) => value.length <= 140;
+// условия для комментов
+const validateComments = (value) => {
+  if (!value.trim()) {
+    return true;
+  } // Хэштеги необязательны
+
+  const comment = value.trim().split(/\s+/);
+
+  if (comment.length <= 140) {
+    return false;
+  }
+
+};
+
+const getComentssErrorMessage = (value) => {
+  if (!value.trim()) {
+    return '';
+  }
+
+  const comment = value.trim().split(/\s+/);
+
+  if (comment.length <= 140) {
+    return 'Длина комментария не может превышать 140 символов';
+  }
+
+};
 
 // валидация комментов
 pristine.addValidator(
   commentInput, // инпут текста
-  validateComments,
-  'Комментарий не должен превышать 140 символов',
-  2,
-  false
+  validateComments, // функция валидации
+  getComentssErrorMessage // тексты ошибок
 );
 
 // Блокировка закрытия формы по Esc при фокусе в полях нашла в инете код
