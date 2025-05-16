@@ -130,7 +130,7 @@ const validateComments = (value) => {
   const comment = value.trim();
   const maxSymbol = 140;
 
-  if (comment.length <= maxSymbol) {
+  if (comment.length === maxSymbol) {
     return false;
   }
 
@@ -144,7 +144,7 @@ const getComentssErrorMessage = (value) => {
   const comment = value.trim();
   const maxSymbol = 140;
 
-  if (comment.length <= maxSymbol) {
+  if (comment.length === maxSymbol) {
     return 'Длина комментария не может превышать 140 символов';
   }
 
