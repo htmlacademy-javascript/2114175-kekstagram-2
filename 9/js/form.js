@@ -62,9 +62,10 @@ const validateHashtags = (value) => {
       return false;
     } // Только буквы/цифры, не более 20 символов
   }
-  console.log(hashtags);
 
-  if (hashtags.length > 5) { // не больше 5 хэштегов
+
+  const maxHashtags = 5;
+  if (hashtags.length > maxHashtags) { // не больше 5 хэштегов
     return false;
   }
 
@@ -84,12 +85,13 @@ const getHashtagsErrorMessage = (value) => {
   }
 
   const hashtags = value.trim().split(/\s+/);
+  const maxHashtags = 5;
 
-  if (hashtags.length > 5) {
+  if (hashtags.length > maxHashtags) {
     return 'Нельзя указать больше пяти хэштегов';
   }
 
-  const lowerCaseTags = hashtags.map(tag => tag.toLowerCase());
+  const lowerCaseTags = hashtags.map((tag) => tag.toLowerCase());
 
   const uniqueTags = new Set(lowerCaseTags);
   if (uniqueTags.size !== hashtags.length) {
@@ -97,6 +99,7 @@ const getHashtagsErrorMessage = (value) => {
   }
 
   const hashtagPattern = /^#[a-zа-яё0-9]{1,19}$/i;
+
   for (const tag of hashtags) {
     if (!tag.startsWith('#')) {
       return 'Хэштег должен начинаться с символа #';
@@ -124,9 +127,10 @@ const validateComments = (value) => {
     return true;
   } // Хэштеги необязательны
 
-  const comment = value.trim().split(/\s+/);
+  const comment = value.trim();
+  const maxSymbol = 140;
 
-  if (comment.length <= 140) {
+  if (comment.length === maxSymbol) {
     return false;
   }
 
@@ -137,9 +141,10 @@ const getComentssErrorMessage = (value) => {
     return '';
   }
 
-  const comment = value.trim().split(/\s+/);
+  const comment = value.trim();
+  const maxSymbol = 140;
 
-  if (comment.length <= 140) {
+  if (comment.length === maxSymbol) {
     return 'Длина комментария не может превышать 140 символов';
   }
 
