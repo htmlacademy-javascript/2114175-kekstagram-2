@@ -10,6 +10,8 @@ let currentScale = 100; // изначальное значение
 
 const updateScale = (newScale) => { // функция изменения размера картинки
   currentScale = Math.min(Math.max(newScale, SCALE_MIN), SCALE_MAX); // получаем цифру в инете нашла не понимаю до конца
+  console.log(currentScale);
+
   scaleValueInput.value = `${currentScale}%`; // записываем новое значение в инпут
   previewImage.style.transform = `scale(${currentScale / 100})`; // перезаписываем размер картинки
 };
